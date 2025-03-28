@@ -83,7 +83,7 @@ fun HomeScreen(navController: NavHostController) {
 
         LazyColumn(verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            var itemClick = Order(0,"","","",0,"")
+            var itemClick = Order(0,"","","",0,"","")
             itemsIndexed(
                 items = orderItemsList,
             ){index,item ->
@@ -106,14 +106,15 @@ fun HomeScreen(navController: NavHostController) {
                             text = "Name : ${item.customerName}\n" +
                                     "Sweet Level : ${item.sweetLevel}\n" +
                                     "Topping : ${item.topping}\n" +
-                                    "Cup Size : ${item.cupSize}\n Price : ${item.price} bath",
+                                    "Cup Size : ${item.cupSize}\n Price : ${item.price} bath\n"+
+                            "Cup Quantity : ${item.cupQuantity}",
                             fontSize = 20.sp
                         )
                         TextButton(
                             onClick = {
                                 itemClick = item
                                 navController.currentBackStackEntry?.savedStateHandle?.set("data",
-                                    Order(item.id,item.customerName,item.cupSize,item.topping,item.price,item.sweetLevel)
+                                    Order(item.id,item.customerName,item.cupSize,item.topping,item.price,item.sweetLevel,item.cupQuantity)
                                 )
                                 navController.navigate(Screen.Edit.route)
                             }
@@ -139,7 +140,7 @@ fun showallData(orderItemsList:MutableList<Order>,context : Context){
 
                 response.body()?.forEach{
                     android.util.Log.d("OrderAPI", "Order: ${it.customerName}, Price: ${it.price}")
-                    orderItemsList.add(Order(it.id,it.customerName,it.cupSize,it.topping,it.price,it.sweetLevel))
+                    orderItemsList.add(Order(it.id,it.customerName,it.cupSize,it.topping,it.price,it.sweetLevel,it.cupQuantity))
                 }
             }
             override fun onFailure(call : Call<List<Order>>, t : Throwable){

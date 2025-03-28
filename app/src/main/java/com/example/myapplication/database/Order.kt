@@ -24,4 +24,7 @@ data class Order(
 
     @Expose
     @SerializedName("sweet_level") val sweetLevel: String,
+
+    @Expose
+    @SerializedName("cup_quantity") val cupQuantity: String
 ) : Parcelable{}

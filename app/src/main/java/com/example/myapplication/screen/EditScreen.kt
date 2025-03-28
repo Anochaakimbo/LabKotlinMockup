@@ -48,12 +48,12 @@ import retrofit2.Response
 fun EditScreen(navController: NavHostController) {
     var deleteDialog by remember { mutableStateOf(false) }
     val data = navController.previousBackStackEntry?.savedStateHandle?.get<Order>("data") ?:
-    Order(0, "", "", "", 0, "")
+    Order(0, "", "", "", 0, "","")
     var id by remember { mutableStateOf(data.id) }
     // State variables
     var orderId by remember { mutableStateOf(data.id) }
     var textFieldCustomerName by remember { mutableStateOf(data.customerName) }
-    var textFieldCupQuantity by remember { mutableStateOf("1") } // Default to 1
+    var textFieldCupQuantity by remember { mutableStateOf(data.cupQuantity) } // Default to 1
     var selectedCup by remember { mutableStateOf(data.cupSize) }
     var selectedSweet by remember { mutableStateOf(data.sweetLevel) }
 
@@ -92,6 +92,15 @@ fun EditScreen(navController: NavHostController) {
             value = textFieldCustomerName,
             onValueChange = { textFieldCustomerName = it },
             label = { Text(text = "Customer Name") }
+        )
+
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            value = textFieldCupQuantity,
+            onValueChange = { textFieldCupQuantity = it },
+            label = { Text(text = "Number of Cups") }
         )
 
         // Cup Size Selection
@@ -164,7 +173,7 @@ fun EditScreen(navController: NavHostController) {
         // Calculate price preview
         val price = calculateEditPrice(
             selectedCup,
-            1,  // Always 1 for edit screen
+            textFieldCupQuantity.toIntOrNull() ?: 1,  // Convert to Int or default to 1
             selectedToppings,
             toppingList
         )
