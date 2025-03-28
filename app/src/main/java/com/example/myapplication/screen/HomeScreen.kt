@@ -106,8 +106,8 @@ fun HomeScreen(navController: NavHostController) {
                             text = "Name : ${item.customerName}\n" +
                                     "Sweet Level : ${item.sweetLevel}\n" +
                                     "Topping : ${item.topping}\n" +
-                                    "Cup Size : ${item.cupSize}\n Price : ${item.price} bath\n"+
-                            "Cup Quantity : ${item.cupQuantity}",
+                                    "Cup Size : ${item.cupSize}\n Price : ${String.format("%,d", item.price)} bath\n" +
+                                    "Cup Quantity : ${item.cupQuantity}",
                             fontSize = 20.sp
                         )
                         TextButton(
